@@ -2,10 +2,18 @@ package application;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.InputStream;
 
+import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 import app.JApplication;
+import io.ResourceFinder;
+import visual.statik.sampled.Content;
+import visual.statik.sampled.ContentFactory;
+import visual.statik.sampled.ImageFactory;
 
 /**
  * App for In The Abstract.
@@ -16,33 +24,32 @@ public class App extends JApplication implements ActionListener
 {
 
 	/**
-	 * .
-	 * @param width - 
-	 * @param height - 
+	 * constructor.
+	 * @param width - of the window
+	 * @param height - of the window
 	 */
 	public App(int width, int height)
 	{
 		super(width, height);
-		// TODO Auto-generated constructor stub
 	}
 	
 	/**
-	 * .
-	 * @param args -
-	 * @param width - 
-	 * @param height - 
+	 * constructor.
+	 * @param args - input
+	 * @param width - of the window
+	 * @param height - of the window
 	 */
 	public App(String[] args, int width, int height) 
 	{
 		super(args, width, height);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) 
 	{
 		String eventName = e.getActionCommand();
-		// TODO Auto-generated method stub
+
+		//TODO: Setup Jump event
 		
 	}
 
@@ -53,8 +60,10 @@ public class App extends JApplication implements ActionListener
 		JPanel contentPane = (JPanel)getContentPane();
 		//Sets up hard code layout. 
 		contentPane.setLayout(null);
-		// TODO Auto-generated method stub
 		
+		//TODO: Setup first jump on scene
+		
+		//TODO: Setup train moving game
 	}
 
 	
