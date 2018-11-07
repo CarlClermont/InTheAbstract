@@ -2,25 +2,20 @@ package application;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.io.InputStream;
 
-import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 import app.JApplication;
-import io.ResourceFinder;
-import visual.statik.sampled.Content;
-import visual.statik.sampled.ContentFactory;
-import visual.statik.sampled.ImageFactory;
+import event.MetronomeListener;
+import visual.VisualizationView;
+import visual.dynamic.described.Stage;
 
 /**
  * App for In The Abstract.
  * @author Carl Clermont, Joel Spiers, Paul Barnhill
  * 
  */
-public class App extends JApplication implements ActionListener
+public class App extends JApplication implements ActionListener, MetronomeListener
 {
 
 	/**
@@ -45,15 +40,6 @@ public class App extends JApplication implements ActionListener
 	}
 
 	@Override
-	public void actionPerformed(ActionEvent e) 
-	{
-		String eventName = e.getActionCommand();
-
-		//TODO: Setup Jump event
-		
-	}
-
-	@Override
 	public void init() 
 	{
 		//Sets up contentPane.
@@ -64,8 +50,35 @@ public class App extends JApplication implements ActionListener
 		//TODO: Setup first jump on scene
 		
 		//TODO: Setup train moving game
+		Stage stage = new Stage(50);
+		VisualizationView stageView = stage.getView();
+		stageView.setBounds(0, 0, width, height);
+		BackgroundA bgA = new BackgroundA();
+		BackgroundB bgB = new BackgroundB();
+		stage.add(bgA);
+		stage.add(bgB);
+		
+		contentPane.add(stageView);
+		stage.start();
+		
 	}
 
+	@Override
+	public void actionPerformed(ActionEvent e) 
+	{
+		String eventName = e.getActionCommand();
+
+		//TODO: Setup Jump event
+		
+	}
+	
+	@Override
+	public void handleTick(int arg0) 
+	{
+		// TODO Auto-generated method stub
+		
+	}
+	
 	
 	/*----------------------------------------------------------------------------------------------*/
 	/**
@@ -74,8 +87,10 @@ public class App extends JApplication implements ActionListener
 	 */
 	public static void main(String[] args)
 	{
-	  JApplication app = new App(args, 600, 400);
+	  JApplication app = new App(args, 600, 600);
 	  invokeInEventDispatchThread(app);
 	}
+
+
 	
 }

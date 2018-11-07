@@ -7,27 +7,43 @@ import java.io.InputStream;
 import javax.imageio.ImageIO;
 
 import io.ResourceFinder;
-import visual.statik.sampled.CompositeContent;
+import visual.dynamic.described.AbstractSprite;
+import visual.dynamic.described.RuleBasedSprite;
+import visual.statik.TransformableContent;
 import visual.statik.sampled.Content;
 import visual.statik.sampled.ContentFactory;
 
 /**
  * .
  * @author Carl
- *
+ * For the random speed it needs to be created elsewhere since the two backgrounds will
+ * have different implementations so they need to be sent the same value in modifySpeed().
  */
-public class Background extends CompositeContent
+public abstract class Background extends RuleBasedSprite
 {
-	private Content bg1;
-	private Content bg2;
+	private final int BG_WIDTH = 2400; //size of background image in pixels
+	private final int BG_HEIGHT = 600; //size of background image in pixels
+	
+	private double                    x, y;
+	protected TransformableContent[] contents;
 	private int speed;
 	
 	
 	/**
 	 * constructor.
+	 * @param xVal - sets the starting x value.
 	 */
-	public Background()
+	public Background(int xVal)
 	{
+		super();
+		//start at speed 0 and speed up later.
+		contents = new TransformableContent[2];
+		speed = 0;
+		y = 0;
+		x = xVal;
+				
+		//get two copies of the background 
+		//(so that when the first finishes moving across we have another ready).
 		ResourceFinder rf = ResourceFinder.createInstance(new resources.Marker());
 		ContentFactory contentFactory = new ContentFactory();
 		
@@ -38,8 +54,8 @@ public class Background extends CompositeContent
 			InputStream    is;
 			is = rf.findInputStream("Background lowres.png");
 			bufferedImage = ImageIO.read(is);
-			bg1 = contentFactory.createContent(bufferedImage);
-			bg2 = contentFactory.createContent(bufferedImage);
+			contents[0] = contentFactory.createContent(bufferedImage);
+			contents[1] = contentFactory.createContent(bufferedImage);
 			is.close();
 		}
 		catch (IOException e)
@@ -47,8 +63,6 @@ public class Background extends CompositeContent
 			
 		}
 		
-		//start at speed 0 and speed up later.
-		speed = 0;
 	}
 	
 	/**
@@ -56,7 +70,7 @@ public class Background extends CompositeContent
 	 */
 	public void incrementSpeed()
 	{
-		modifySpeed(1);
+		modifySpeed(10);
 	}
 	
 	/**
@@ -71,6 +85,23 @@ public class Background extends CompositeContent
 			speed = 0;
 		}
 	}
+	
+	@Override
+	public TransformableContent getContent() 
+	{
+		return contents[0];
+	}
+
+	@Override
+	public void handleTick(int arg0) 
+	{
+		incrementSpeed();
+		//TODO: RANDOM SPEED.
+		x = x - speed;
+		setLocation(x, 0);
+	}
+	
+	
 	
 	
 	
