@@ -9,7 +9,7 @@ import app.JApplication;
 
 /**
  * App for In The Abstract.
- * @author Carl Clermont, 
+ * @author Carl Clermont, Joel Spiers, Paul Barnhill
  * 
  */
 public class App extends JApplication implements ActionListener
