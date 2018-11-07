@@ -53,8 +53,8 @@ public class App extends JApplication implements ActionListener, MetronomeListen
 		Stage stage = new Stage(50);
 		VisualizationView stageView = stage.getView();
 		stageView.setBounds(0, 0, width, height);
-		BackgroundA bgA = new BackgroundA();
-		BackgroundB bgB = new BackgroundB();
+		Background bgA = new Background(0, 0);
+		Background bgB = new Background(Background.BG_WIDTH, 0);
 		stage.add(bgA);
 		stage.add(bgB);
 		
@@ -75,6 +75,7 @@ public class App extends JApplication implements ActionListener, MetronomeListen
 	@Override
 	public void handleTick(int arg0) 
 	{
+		System.out.println("HI");
 		// TODO Auto-generated method stub
 		
 	}

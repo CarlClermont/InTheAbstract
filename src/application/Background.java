@@ -8,9 +8,7 @@ import javax.imageio.ImageIO;
 
 import io.ResourceFinder;
 import visual.dynamic.described.AbstractSprite;
-import visual.dynamic.described.RuleBasedSprite;
 import visual.statik.TransformableContent;
-import visual.statik.sampled.Content;
 import visual.statik.sampled.ContentFactory;
 
 /**
@@ -19,50 +17,49 @@ import visual.statik.sampled.ContentFactory;
  * For the random speed it needs to be created elsewhere since the two backgrounds will
  * have different implementations so they need to be sent the same value in modifySpeed().
  */
-public abstract class Background extends RuleBasedSprite
+public class Background extends AbstractSprite
 {
-	private final int BG_WIDTH = 2400; //size of background image in pixels
-	private final int BG_HEIGHT = 600; //size of background image in pixels
+	public static final int BG_WIDTH = 2400; //size of background image in pixels
+	public static final int BG_HEIGHT = 600; //size of background image in pixels
+	private final int speedChangeDelay = 10; //how many ticks till the speed increases.
 	
 	private double                    x, y;
-	protected TransformableContent[] contents;
 	private int speed;
-	
+	private int speedChangeDelayCounter;
+	private TransformableContent content;
 	
 	/**
 	 * constructor.
 	 * @param xVal - sets the starting x value.
+	 * @param yVal - sets the starting y value.
 	 */
-	public Background(int xVal)
+	public Background(int xVal, int yVal)
 	{
 		super();
 		//start at speed 0 and speed up later.
-		contents = new TransformableContent[2];
-		speed = 0;
-		y = 0;
+		speed = 10;
+		//The amount of ticks needed to change the increase in speed.
+		speedChangeDelayCounter = 0;
 		x = xVal;
+		y = yVal;
 				
-		//get two copies of the background 
-		//(so that when the first finishes moving across we have another ready).
 		ResourceFinder rf = ResourceFinder.createInstance(new resources.Marker());
 		ContentFactory contentFactory = new ContentFactory();
-		
 		BufferedImage bufferedImage;
-		Content c;
 		try 
 		{
 			InputStream    is;
 			is = rf.findInputStream("Background lowres.png");
 			bufferedImage = ImageIO.read(is);
-			contents[0] = contentFactory.createContent(bufferedImage);
-			contents[1] = contentFactory.createContent(bufferedImage);
+			content = contentFactory.createContent(bufferedImage);
 			is.close();
 		}
 		catch (IOException e)
 		{
 			
 		}
-		
+		this.setLocation(x,y);
+		this.setVisible(true);
 	}
 	
 	/**
@@ -70,7 +67,7 @@ public abstract class Background extends RuleBasedSprite
 	 */
 	public void incrementSpeed()
 	{
-		modifySpeed(10);
+		modifySpeed(1);
 	}
 	
 	/**
@@ -80,24 +77,39 @@ public abstract class Background extends RuleBasedSprite
 	public void modifySpeed(int modifier)
 	{
 		speed += modifier;
-		if(speed > 0)
+		if(speed < 0)
 		{
 			speed = 0;
+		}
+		if(speed > BG_WIDTH)
+		{
+			speed = BG_WIDTH;
 		}
 	}
 	
 	@Override
 	public TransformableContent getContent() 
 	{
-		return contents[0];
+		return content;
 	}
 
 	@Override
 	public void handleTick(int arg0) 
 	{
-		incrementSpeed();
+		if(speedChangeDelayCounter >= speedChangeDelay)
+		{
+			incrementSpeed();
+			speedChangeDelayCounter = 0;
+		}
 		//TODO: RANDOM SPEED.
 		x = x - speed;
+		if (x <= (-1*BG_WIDTH))
+		{
+			x = BG_WIDTH;
+			x = x - speed;
+		}
+		speedChangeDelayCounter++;
+		
 		setLocation(x, 0);
 	}
 	
