@@ -90,7 +90,6 @@ public class App extends JApplication implements ActionListener, MetronomeListen
 	@Override
 	public void handleTick(int arg0) 
 	{
-		System.out.println("HI");
 		// TODO Auto-generated method stub
 		
 	}

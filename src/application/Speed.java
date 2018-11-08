@@ -6,7 +6,7 @@ import visual.statik.TransformableContent;
 /**
  * .
  * @author Carl
- * An abstract sprite to be added to the same stage as everything else.
+ * An abstract sprite to be added to the same stage (and metronome) as everything else.
  */
 public class Speed extends AbstractSprite
 {
