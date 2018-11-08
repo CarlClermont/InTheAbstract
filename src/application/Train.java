@@ -11,7 +11,6 @@ import visual.statik.sampled.ContentFactory;
  */
 public class Train extends AbstractSprite
 {
-	private Speed speed;
 	private TransformableContent content;
 	private int positionNumber;
 	private int originalX;
@@ -24,10 +23,9 @@ public class Train extends AbstractSprite
 	 * @param content - 
 	 * @param speed - 
 	 */
-	public Train(int xVal, int yVal, TransformableContent content, Speed speed)
+	public Train(int xVal, int yVal, TransformableContent content)
 	{
 		super();
-		this.speed = speed;
 		x = xVal;
 		y = yVal;
 		originalX = xVal;

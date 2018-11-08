@@ -2,11 +2,7 @@ package application;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.io.InputStream;
 
-import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 import app.JApplication;
@@ -14,10 +10,7 @@ import event.MetronomeListener;
 import io.ResourceFinder;
 import visual.VisualizationView;
 import visual.dynamic.described.Stage;
-import visual.statik.TransformableContent;
-import visual.statik.sampled.Content;
 import visual.statik.sampled.ContentFactory;
-import visual.statik.sampled.ImageFactory;
 
 /**
  * App for In The Abstract.
@@ -74,7 +67,7 @@ public class App extends JApplication implements ActionListener, MetronomeListen
 				contentFactory.createContent(backgroundName, 4), speed);
 		Background bgB = new Background(Background.BG_WIDTH, 0, 
 				contentFactory.createContent(backgroundName, 4), speed);
-		Train train = new Train(100, 265, contentFactory.createContent(trainName, 4), speed);
+		Train train = new Train(100, 265, contentFactory.createContent(trainName, 4));
 		stage.add(bgA);
 		stage.add(bgB);
 		stage.add(train);
