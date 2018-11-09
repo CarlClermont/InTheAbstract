@@ -1,4 +1,4 @@
-package application;
+package content;
 
 import visual.dynamic.described.AbstractSprite;
 import visual.statik.TransformableContent;
@@ -21,7 +21,6 @@ public class Train extends AbstractSprite
 	 * @param xVal - 
 	 * @param yVal - 
 	 * @param content - 
-	 * @param speed - 
 	 */
 	public Train(int xVal, int yVal, TransformableContent content)
 	{
@@ -52,6 +51,7 @@ public class Train extends AbstractSprite
 	@Override
 	public void handleTick(int arg0) 
 	{
+		//When bernstein jumps off the train needs to speed away (with the people in it)
 		switch(positionNumber)
 		{
 			case 0:

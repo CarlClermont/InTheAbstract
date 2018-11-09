@@ -1,4 +1,4 @@
-package application;
+package content;
 
 import visual.dynamic.described.AbstractSprite;
 import visual.statik.TransformableContent;

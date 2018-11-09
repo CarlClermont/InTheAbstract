@@ -6,6 +6,11 @@ import java.awt.event.ActionListener;
 import javax.swing.JPanel;
 
 import app.JApplication;
+import content.Background;
+import content.Bernstein;
+import content.Friend;
+import content.Speed;
+import content.Train;
 import event.MetronomeListener;
 import io.ResourceFinder;
 import visual.VisualizationView;
@@ -22,7 +27,16 @@ public class App extends JApplication implements ActionListener, MetronomeListen
 	//for some reason .png doesn't keep the alpha channel when I save it so,
 	//I use .gif if it needs alpha.
 	private final String backgroundName = "Background lowres.png";
-	private final String trainName = "train_0.gif";
+	private final String trainName = "train_1.gif";
+	private final String happyFriendName = "person_0.gif";
+	private final String sadFriendName = "person_1.gif";
+	private final String normalBernsteinName = "bernstein_0.gif";
+	private final String happyBernsteinName = "bernstein_1.gif";
+	private final String bowersName = "bowers_0.gif";
+	private final String nortonName = "norton_0.gif";
+	private final String spragueName = "sprague_0.gif";
+	
+	
 	
 	
 	/**
@@ -67,9 +81,19 @@ public class App extends JApplication implements ActionListener, MetronomeListen
 				contentFactory.createContent(backgroundName, 4), speed);
 		Background bgB = new Background(Background.BG_WIDTH, 0, 
 				contentFactory.createContent(backgroundName, 4), speed);
+		//X positions for Bernstein and friends in carts: 105, 175, 245
+		Friend friend1 = new Friend(105, 280, contentFactory.createContent(happyFriendName, 4)); 
+		Friend friend2 = new Friend(245, 280, contentFactory.createContent(happyFriendName, 4)); 
+		Friend conductor = new Friend(338, 285, contentFactory.createContent(happyFriendName, 4));
+		Bernstein bernstein = new Bernstein(175, 280, 
+				contentFactory.createContent(normalBernsteinName, 4));
 		Train train = new Train(100, 265, contentFactory.createContent(trainName, 4));
 		stage.add(bgA);
 		stage.add(bgB);
+		stage.add(friend1);
+		stage.add(friend2);
+		stage.add(conductor);
+		stage.add(bernstein);
 		stage.add(train);
 		stage.add(speed);
 		
