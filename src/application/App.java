@@ -2,6 +2,8 @@ package application;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import javax.swing.JPanel;
 
@@ -22,7 +24,7 @@ import visual.statik.sampled.ContentFactory;
  * @author Carl Clermont, Joel Spiers, Paul Barnhill
  * 
  */
-public class App extends JApplication implements ActionListener, MetronomeListener
+public class App extends JApplication implements ActionListener, MetronomeListener, KeyListener
 {
 	//for some reason .png doesn't keep the alpha channel when I save it so,
 	//I use .gif if it needs alpha.
@@ -36,7 +38,8 @@ public class App extends JApplication implements ActionListener, MetronomeListen
 	private final String nortonName = "norton_0.gif";
 	private final String spragueName = "sprague_0.gif";
 	
-	
+	private Stage stage;
+	private Bernstein bernstein;
 	
 	
 	/**
@@ -74,7 +77,7 @@ public class App extends JApplication implements ActionListener, MetronomeListen
 		//TODO: Setup first jump on scene
 		
 		//TODO: Setup train moving game
-		Stage stage = new Stage(50);
+		stage = new Stage(50);
 		VisualizationView stageView = stage.getView();
 		stageView.setBounds(0, 0, width, height);
 		Background bgA = new Background(0, 0, 
@@ -85,7 +88,7 @@ public class App extends JApplication implements ActionListener, MetronomeListen
 		Friend friend1 = new Friend(105, 280, contentFactory.createContent(happyFriendName, 4)); 
 		Friend friend2 = new Friend(245, 280, contentFactory.createContent(happyFriendName, 4)); 
 		Friend conductor = new Friend(338, 285, contentFactory.createContent(happyFriendName, 4));
-		Bernstein bernstein = new Bernstein(175, 280, 
+		bernstein = new Bernstein(175, 280, 
 				contentFactory.createContent(normalBernsteinName, 4));
 		Train train = new Train(100, 265, contentFactory.createContent(trainName, 4));
 		stage.add(bgA);
@@ -96,6 +99,8 @@ public class App extends JApplication implements ActionListener, MetronomeListen
 		stage.add(bernstein);
 		stage.add(train);
 		stage.add(speed);
+		stage.addKeyListener(this);
+		
 		
 		contentPane.add(stageView);
 		stage.start();
@@ -129,6 +134,31 @@ public class App extends JApplication implements ActionListener, MetronomeListen
 	  JApplication app = new App(args, 600, 600);
 	  invokeInEventDispatchThread(app);
 	}
+
+  @Override
+  public void keyPressed(KeyEvent e)
+  {
+    // TODO Auto-generated method stub
+    
+  }
+
+  @Override
+  public void keyReleased(KeyEvent e)
+  {
+    // TODO Auto-generated method stub
+    
+  }
+
+  @Override
+  public void keyTyped(KeyEvent e)
+  {
+    if(e.getKeyChar() == ' ')
+    {
+      bernstein.jump();
+      stage.remove(bernstein);
+      stage.add(bernstein);
+    }
+  }
 
 
 	

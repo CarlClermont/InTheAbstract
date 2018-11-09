@@ -1,5 +1,8 @@
 package content;
 
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+
 import visual.dynamic.described.AbstractSprite;
 import visual.statik.TransformableContent;
 import visual.statik.sampled.ContentFactory;
@@ -8,6 +11,11 @@ public class Bernstein extends AbstractSprite
 {
 
 	private TransformableContent content;
+	int jumpHeight = 200;
+	int jumpSpeed = 5;
+	int groundHeight = 450;
+	boolean jumping = false;
+	boolean falling = false;
 
 	/**
 	 * .
@@ -31,6 +39,11 @@ public class Bernstein extends AbstractSprite
 		this.setLocation(x,y);
 		this.setVisible(true);
 	}
+	
+	public void jump()
+	{
+	  jumping = true;
+	}
 
 	@Override
 	protected TransformableContent getContent() 
@@ -41,7 +54,23 @@ public class Bernstein extends AbstractSprite
 	@Override
 	public void handleTick(int arg0) 
 	{
+	  if(jumping && !falling)
+	  {
+	    y -= jumpSpeed;
+	    if(y <= jumpHeight)
+	    {
+	      falling = true;
+	    }
+	  }
+	  else if(jumping && falling)
+	  {
+	    y += jumpSpeed;
+	    if(y >= groundHeight)
+	    {
+	      jumping = false;
+	    }
+	  }
+	  
 		this.setLocation(x,y);
-		
 	}
 }
