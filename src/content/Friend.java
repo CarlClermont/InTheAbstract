@@ -13,6 +13,7 @@ public class Friend extends AbstractSprite
 {
 	
 	private TransformableContent content;
+	private int speed;
 
 	/**
 	 * .
@@ -25,6 +26,7 @@ public class Friend extends AbstractSprite
 		super();
 		x = xVal;
 		y = yVal;
+		speed = 0;
 		
 		this.content = content;
 		if (this.content == null)
@@ -37,6 +39,11 @@ public class Friend extends AbstractSprite
 		this.setVisible(true);
 	}	
 	
+	public void setSpeed(int speed)
+	{
+	  this.speed = speed;
+	}
+	
 	@Override
 	protected TransformableContent getContent() 
 	{
@@ -47,6 +54,7 @@ public class Friend extends AbstractSprite
 	public void handleTick(int arg0) 
 	{
 		//When bernstein jumps off the train needs to speed away (with the people in it)
+	  x += speed;
 		this.setLocation(x,y);
 		
 	}

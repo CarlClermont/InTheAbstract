@@ -14,6 +14,8 @@ public class Speed extends AbstractSprite
 	private int speedChangeDelay;
 	private int speedChangeDelayCounter;
 	
+	private boolean stopping;
+	
 	/**
 	 * .
 	 */
@@ -22,6 +24,8 @@ public class Speed extends AbstractSprite
 		this.speed = 0;
 		this.speedChangeDelay = 10;
 		this.speedChangeDelayCounter = 0;
+		
+		this.stopping = false;
 	}
 
 	/**
@@ -58,6 +62,11 @@ public class Speed extends AbstractSprite
 			speed = Background.BG_WIDTH;
 		}
 	}
+	
+	public void stop()
+	{
+	  stopping = true;
+	}
 
 	@Override
 	protected TransformableContent getContent() 
@@ -68,17 +77,20 @@ public class Speed extends AbstractSprite
 	@Override
 	public void handleTick(int arg0) 
 	{
-		//TODO: psudo random.
+		//TODO: psuedo random.
 		
 		//modify speed.
 		if(speedChangeDelayCounter >= speedChangeDelay)
 		{
-			incrementSpeed();
+		  if(!stopping)
+		    incrementSpeed();
+		  else if(speed > 3)
+		    modifySpeed(-3);
+		  else
+		    modifySpeed(-this.getSpeed());
 			speedChangeDelayCounter = 0;
 		}
-		speedChangeDelayCounter++;
-		// TODO Auto-generated method stub
-		
+		speedChangeDelayCounter++;		
 	}
 	
 }

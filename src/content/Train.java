@@ -15,6 +15,7 @@ public class Train extends AbstractSprite
 	private int positionNumber;
 	private int originalX;
 	private int originalY;
+	private int speed;
 
 	/**
 	 * .
@@ -30,6 +31,7 @@ public class Train extends AbstractSprite
 		originalX = xVal;
 		originalY = yVal;
 		positionNumber = 0;
+		speed = 0;
 		
 		this.content = content;
 		if (this.content == null)
@@ -42,6 +44,11 @@ public class Train extends AbstractSprite
 		this.setVisible(true);
 	}
 	
+	public void setSpeed(int speed)
+	{
+	  this.speed = speed;
+	}
+	
 	@Override
 	protected TransformableContent getContent() 
 	{
@@ -52,30 +59,37 @@ public class Train extends AbstractSprite
 	public void handleTick(int arg0) 
 	{
 		//When bernstein jumps off the train needs to speed away (with the people in it)
-		switch(positionNumber)
-		{
-			case 0:
-				x += 1;
-//				y += 3;
-				break;
-			case 1:
-				x -= 1;
-//				y -= 3;
-				break;
-//			case 2:
-//				x -= 1;
-//				y -= 3;
-//				break;
-//			case 3:
-//				x += 1;
-//				y += 3;
-//				break;
-			default:
-				x = originalX;
-				y = originalY;
-				positionNumber = 0;
-				break;
-		}
+	  if(speed > 0)
+	  {
+	    x += speed;
+	  }
+	  else
+	  {
+	    switch(positionNumber)
+	    {
+	      case 0:
+	        x += 1;
+	        //				y += 3;
+	        break;
+	      case 1:
+	        x -= 1;
+	        //				y -= 3;
+	        break;
+	        //			case 2:
+	        //				x -= 1;
+	        //				y -= 3;
+	        //				break;
+	        //			case 3:
+	        //				x += 1;
+	        //				y += 3;
+	        //				break;
+	      default:
+	        x = originalX;
+	        y = originalY;
+	        positionNumber = 0;
+	        break;
+	    }
+	  }
 		
 		positionNumber++;
 		setLocation(x,y);
