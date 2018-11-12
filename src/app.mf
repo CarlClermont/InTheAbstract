@@ -1,0 +1,3 @@
+Manifest-Version: 1.2
+Main-Class: application.App
+Class-Path: multimedia2.jar
