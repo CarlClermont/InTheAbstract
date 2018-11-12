@@ -2,6 +2,6 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="D:/School/Fall 2018/CS 349/InTheAbstract/multimedia2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/ptida/Documents/JMU/F18/CS 349/multimedia2.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

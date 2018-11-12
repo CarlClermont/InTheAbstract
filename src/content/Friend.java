@@ -34,6 +34,7 @@ public class Friend extends AbstractSprite
 			ContentFactory contentFactory = new ContentFactory();
 			this.content = contentFactory.createContent("");
 		}
+		
 		this.setScale(0.5); //may need changing.
 		this.setLocation(x,y);
 		this.setVisible(true);

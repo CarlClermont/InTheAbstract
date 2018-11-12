@@ -6,7 +6,9 @@ import visual.statik.sampled.ContentFactory;
 
 /**
  * .
- * @author Carl
+ * @author Carl Clermont
+ * @author Paul Barnhill
+ * @version 2018-11-11
  * For the random speed it needs to be created elsewhere since the two backgrounds will
  * have different implementations so they need to be sent the same value in modifySpeed().
  */
@@ -14,6 +16,9 @@ public class Background extends AbstractSprite
 {
 	public static final int BG_WIDTH = 2400; //size of background image in pixels
 	public static final int BG_HEIGHT = 600; //size of background image in pixels
+	
+	// Used for seamless transition
+	private Background sibling;
 	
 	private Speed speed;
 	private TransformableContent content;
@@ -43,6 +48,16 @@ public class Background extends AbstractSprite
 		this.setVisible(true);
 	}
 	
+	public void setSibling(Background sibling)
+	{
+	  if (sibling == this)
+	  {
+	    throw new IllegalArgumentException("Sibling cannot be the same background!");
+	  }
+	  
+	  this.sibling = sibling;
+	}
+	
 	@Override
 	public TransformableContent getContent() 
 	{
@@ -50,16 +65,42 @@ public class Background extends AbstractSprite
 	}
 
 	@Override
-	public void handleTick(int arg0) 
+	public void handleTick(int millis) 
 	{
-		x = x - speed.getSpeed();
+	  //System.out.println("BG - millis: " + millis);
+	  int currSpeed = speed.getSpeed();
+		x -= currSpeed;
+		
+		// Background has gone off the left side, put it directly behind its sibling.
 		if (x <= (-1*BG_WIDTH))
 		{
-			x = BG_WIDTH;
-			x = x - speed.getSpeed();
-		}
+		  System.out.println("x before fix: " + x);
+			
+		  if (sibling != null)
+		  {
+		    x = sibling.getHorizontalPos() + BG_WIDTH - currSpeed;
+		  }
+		  else
+		  {
+		    x = BG_WIDTH - currSpeed;
+		  }
+		  
+			System.out.println("x after fix: " + x);
+			System.out.println("\tspeed: " + currSpeed + " MPH");
+			System.out.println("\tmillis: " + millis + "\n");
+		}	
 		
+		// Background will always start from the top, so Y is 0.
 		setLocation(x, 0);
+	}
+	
+	/**
+	 * Gets the current x-coordinate.
+	 * @return horizontal position
+	 */
+	public double getHorizontalPos()
+	{
+	  return x;
 	}
 	
 	

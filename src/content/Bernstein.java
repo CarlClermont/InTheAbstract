@@ -28,8 +28,8 @@ public class Bernstein extends AbstractSprite
 	public Bernstein(int xVal, int yVal, TransformableContent content)
 	{
 		super();
-		x = xVal;
-		y = yVal;
+		super.x = xVal;
+		super.y = yVal;
 		
 		this.content = content;
 		if (this.content == null)
@@ -60,31 +60,39 @@ public class Bernstein extends AbstractSprite
 	@Override
 	public void handleTick(int arg0) 
 	{
-	  if(jumped && !done)
+	  if(!done && jumped)
 	  {
-	    if(jumping && y < groundHeight)
+	    if (jumping)
 	    {
-	      //Falling
-	      y -= jumpSpeed;
-	      jumpSpeed -= gravity;
+	      if (y < groundHeight)
+	      {
+	        //Falling
+	        y -= jumpSpeed;
+	        jumpSpeed -= gravity;
+	      }
+	      
+	      else
+	      {
+	        //Hit ground
+	        jumping = false;
+	      }
 	    }
-	    else if(jumping && y >= groundHeight)
+	    
+	    
+	    else if (survived)
 	    {
-	      //Hit ground
-	      jumping = false;
-	    }
-	    else if(survived)
-	    {
-	      //Roll
+	      // Roll
 	      if(rotationX >= (11 * Math.PI)/6)
 	      {
 	        //Finished rolling
 	        done = true;
 	      }
+	      
 	      rotationX += Math.PI / 6;
 	      this.setRotation(rotationX);
 	    }
-	    else if(!survived)
+	    
+	    else
 	    {
 	      //Fall
         if(rotationX >= (2 * Math.PI)/6)

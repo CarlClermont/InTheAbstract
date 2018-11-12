@@ -63,18 +63,21 @@ public class Train extends AbstractSprite
 	  {
 	    x += speed;
 	  }
+	  
 	  else
 	  {
-	    switch(positionNumber)
+	    switch (positionNumber)
 	    {
 	      case 0:
 	        x += 1;
 	        //				y += 3;
 	        break;
+	        
 	      case 1:
 	        x -= 1;
 	        //				y -= 3;
 	        break;
+	        
 	        //			case 2:
 	        //				x -= 1;
 	        //				y -= 3;
@@ -83,6 +86,7 @@ public class Train extends AbstractSprite
 	        //				x += 1;
 	        //				y += 3;
 	        //				break;
+	        
 	      default:
 	        x = originalX;
 	        y = originalY;
