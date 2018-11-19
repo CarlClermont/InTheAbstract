@@ -48,6 +48,10 @@ public class Background extends AbstractSprite
 		this.setVisible(true);
 	}
 	
+	/**
+	 * Sets the background pair so they can know attributes of the other background.
+	 * @param sibling - the other instance of a background.
+	 */
 	public void setSibling(Background sibling)
 	{
 	  if (sibling == this)

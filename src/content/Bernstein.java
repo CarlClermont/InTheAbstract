@@ -1,23 +1,25 @@
 package content;
 
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-
 import visual.dynamic.described.AbstractSprite;
 import visual.statik.TransformableContent;
 import visual.statik.sampled.ContentFactory;
 
+/**
+ * Handles the actions for Bernstein.
+ * @author Carl
+ *
+ */
 public class Bernstein extends AbstractSprite
 {
 
 	private TransformableContent content;
-	int jumpSpeed = 5;
-	int gravity = 1;
-	int groundHeight = 400;
-	boolean jumped = false;
-	boolean jumping = false;
-	boolean survived;
-	boolean done = false;
+	private int jumpSpeed = 5;
+	private int gravity = 1;
+	private int groundHeight = 400;
+	private boolean jumped = false;
+	private boolean jumping = false;
+	private boolean survived;
+	private boolean done = false;
 
 	/**
 	 * .
@@ -42,6 +44,11 @@ public class Bernstein extends AbstractSprite
 		this.setVisible(true);
 	}
 	
+	/**
+	 * 
+	 * @param speed - the speed to jump off.
+	 * @param survived - weather or not he rolls or slides
+	 */
 	public void jump(int speed, boolean survived)
 	{
 	  jumped = true;

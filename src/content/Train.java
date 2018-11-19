@@ -44,6 +44,10 @@ public class Train extends AbstractSprite
 		this.setVisible(true);
 	}
 	
+	/**
+	 * sets the speed of the train to the input speed.
+	 * @param speed - 
+	 */
 	public void setSpeed(int speed)
 	{
 	  this.speed = speed;
@@ -70,23 +74,10 @@ public class Train extends AbstractSprite
 	    {
 	      case 0:
 	        x += 1;
-	        //				y += 3;
 	        break;
-	        
 	      case 1:
 	        x -= 1;
-	        //				y -= 3;
 	        break;
-	        
-	        //			case 2:
-	        //				x -= 1;
-	        //				y -= 3;
-	        //				break;
-	        //			case 3:
-	        //				x += 1;
-	        //				y += 3;
-	        //				break;
-	        
 	      default:
 	        x = originalX;
 	        y = originalY;

@@ -2,6 +2,7 @@ package application;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseListener;
 
 import javax.swing.JPanel;
 
@@ -37,6 +38,14 @@ public class App extends JApplication implements KeyListener
 	private final String spragueName = "sprague_0.gif";
 	private final int trainLeaveSpeed = 10;
 	private final int safeJumpSpeed = 25;
+	private final int friendOneX = 105;
+	private final int friendOneY = 280;
+	private final int friendTwoX = 245;
+	private final int friendTwoY = 280;
+	private final int bernsteinX = 175;
+	private final int bernsteinY = 280;
+	private final int conductorX = 338;
+	private final int conductorY = 285;
 	
 	private Stage stage;
 	private Speed speed;
@@ -78,7 +87,7 @@ public class App extends JApplication implements KeyListener
 		ResourceFinder rf = ResourceFinder.createInstance(new resources.Marker());
 		ContentFactory contentFactory = new ContentFactory(rf);
 		
-		//TODO: Setup first jump on scene
+		//TODO: Main Menu
 		
 		// Setup train moving game (50ms between ticks)
 		stage = new Stage(50);
@@ -94,11 +103,12 @@ public class App extends JApplication implements KeyListener
 		Background bgB = bgPair.getBackgroundTwo();
 		
 		//X positions for Bernstein and friends in carts: 105, 175, 245
-		friend1 = new Friend(105, 280, contentFactory.createContent(happyFriendName, 4)); 
-		friend2 = new Friend(245, 280, contentFactory.createContent(happyFriendName, 4)); 
-		conductor = new Friend(338, 285, contentFactory.createContent(happyFriendName, 4));
+		friend1 = new Friend(friendOneX, friendOneY, contentFactory.createContent(happyFriendName, 4)); 
+		friend2 = new Friend(friendTwoX, friendTwoY, contentFactory.createContent(happyFriendName, 4)); 
+		conductor = new Friend(conductorX, conductorY, 
+				contentFactory.createContent(happyFriendName, 4));
 		
-		bernstein = new Bernstein(175, 280, 
+		bernstein = new Bernstein(bernsteinX, bernsteinY, 
 				contentFactory.createContent(normalBernsteinName, 4));
 		
 		train = new Train(100, 265, contentFactory.createContent(trainName, 4));
@@ -117,8 +127,38 @@ public class App extends JApplication implements KeyListener
 		stage.start();
 	}
 	
+	/*-KEY-LISTENERS--------------------------------------------------------------------------------*/
+	@Override
+	public void keyPressed(KeyEvent e){}
+
+	@Override
+	public void keyReleased(KeyEvent e){}
+
+	@Override
+	public void keyTyped(KeyEvent e)
+	{
+		if(e.getKeyChar() == ' ')
+		{
+			System.out.println(speed.getSpeed());
+			boolean survived = speed.getSpeed() <= safeJumpSpeed;
+	      
+			speed.stop();
+	      
+			bernstein.jump(15, survived);
+	      
+			train.setSpeed(trainLeaveSpeed);
+			friend1.setSpeed(trainLeaveSpeed);
+			friend2.setSpeed(trainLeaveSpeed);
+			conductor.setSpeed(trainLeaveSpeed);
+	      
+			//Render Bernstein in front of the train
+			stage.remove(bernstein);
+			stage.add(bernstein);
+		}
+	}
 	
-	/*----------------------------------------------------------------------------------------------*/
+	
+	/*-MAIN-----------------------------------------------------------------------------------------*/
 	/**
 	 * main - .
 	 * @param args - 
@@ -128,35 +168,6 @@ public class App extends JApplication implements KeyListener
 	  JApplication app = new App(args, 600, 600);
 	  invokeInEventDispatchThread(app);
 	}
-
-  @Override
-  public void keyPressed(KeyEvent e){}
-
-  @Override
-  public void keyReleased(KeyEvent e){}
-
-  @Override
-  public void keyTyped(KeyEvent e)
-  {
-    if(e.getKeyChar() == ' ')
-    {
-      System.out.println(speed.getSpeed());
-      boolean survived = speed.getSpeed() <= safeJumpSpeed;
-      
-      speed.stop();
-      
-      bernstein.jump(15, survived);
-      
-      train.setSpeed(trainLeaveSpeed);
-      friend1.setSpeed(trainLeaveSpeed);
-      friend2.setSpeed(trainLeaveSpeed);
-      conductor.setSpeed(trainLeaveSpeed);
-      
-      //Render Bernstein in front of the train
-      stage.remove(bernstein);
-      stage.add(bernstein);
-    }
-  }
 
 
 	
