@@ -2,7 +2,6 @@ package application;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.event.MouseListener;
 
 import javax.swing.JPanel;
 
@@ -47,6 +46,7 @@ public class App extends JApplication implements KeyListener
 	private final int conductorX = 338;
 	private final int conductorY = 285;
 	
+	private JPanel contentPane;
 	private Stage stage;
 	private Speed speed;
 	private Bernstein bernstein;
@@ -79,10 +79,27 @@ public class App extends JApplication implements KeyListener
 	public void init() 
 	{
 		//Sets up contentPane.
-		JPanel contentPane = (JPanel)getContentPane();
+		contentPane = (JPanel)getContentPane();
 		
 		//Sets up hard code layout. 
 		contentPane.setLayout(null);
+		
+		//So we have a method that resets to the very beginning of the game.
+		//easier than finding every variable of existing objects and reseting them.
+		startGame();
+		
+		//Note: tombstone gifs use 'Informal Roman' font.
+	}
+	
+	/**
+	 * Starts or resets the game.
+	 * NOTE: May need to be changed to public, depending on how we reset. If a main menu object
+	 * is used to reset then it will need to be.
+	 */
+	private void startGame()
+	{
+		contentPane.removeAll(); //So it can reset.
+		
 		speed = new Speed();
 		ResourceFinder rf = ResourceFinder.createInstance(new resources.Marker());
 		ContentFactory contentFactory = new ContentFactory(rf);
@@ -154,6 +171,11 @@ public class App extends JApplication implements KeyListener
 			//Render Bernstein in front of the train
 			stage.remove(bernstein);
 			stage.add(bernstein);
+		}
+		//R to reset. TODO: CHANGE TO A BUTTON THAT CAN ONLY BE PRESSED BEFORE OR AFTER GAME
+		else if(e.getKeyChar() == 'r')
+		{
+			startGame();
 		}
 	}
 	
