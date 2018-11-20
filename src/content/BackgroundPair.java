@@ -18,10 +18,10 @@ public class BackgroundPair
   private TransformableContent contentB;
   
   public BackgroundPair(int xVal, int yVal, TransformableContent contentA, 
-      TransformableContent contentB, Speed speed)
+      TransformableContent contentB, Speed speed, int speedDivider)
   {
-    this.a = new Background(xVal, yVal, contentA, speed);
-    this.b = new Background(xVal + Background.BG_WIDTH, yVal, contentB, speed);
+    this.a = new Background(xVal, yVal, contentA, speed, speedDivider);
+    this.b = new Background(xVal + Background.BG_WIDTH, yVal, contentB, speed, speedDivider);
     
     a.setSibling(b);
     b.setSibling(a);

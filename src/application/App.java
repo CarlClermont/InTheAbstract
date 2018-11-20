@@ -26,7 +26,8 @@ public class App extends JApplication implements KeyListener
 {
 	//for some reason .png doesn't keep the alpha channel when I save it so,
 	//I use .gif if it needs alpha.
-	private final String backgroundName = "Background lowres.png";
+	private final String backgroundName = "Background lowres.gif";
+	private final String cloudsName = "clouds.gif";
 	private final String trainName = "train_1.gif";
 	private final String happyFriendName = "person_0.gif";
 	private final String sadFriendName = "person_1.gif";
@@ -113,11 +114,15 @@ public class App extends JApplication implements KeyListener
 		
 		BackgroundPair bgPair = new BackgroundPair(0, 0,
 		    contentFactory.createContent(backgroundName, 4),
-		    contentFactory.createContent(backgroundName, 4), speed);
-		
-		
+		    contentFactory.createContent(backgroundName, 4), speed, 1);
 		Background bgA = bgPair.getBackgroundOne();
 		Background bgB = bgPair.getBackgroundTwo();
+		
+		BackgroundPair cloudPair = new BackgroundPair(0, 0,
+			    contentFactory.createContent(cloudsName, 4),
+			    contentFactory.createContent(cloudsName, 4), speed, 10);
+		Background cloudsA = cloudPair.getBackgroundOne();
+		Background cloudsB = cloudPair.getBackgroundTwo();
 		
 		//X positions for Bernstein and friends in carts: 105, 175, 245
 		friend1 = new Friend(friendOneX, friendOneY, contentFactory.createContent(happyFriendName, 4)); 
@@ -130,6 +135,8 @@ public class App extends JApplication implements KeyListener
 		
 		train = new Train(100, 265, contentFactory.createContent(trainName, 4));
 		
+		stage.add(cloudsA);
+		stage.add(cloudsB);
 		stage.add(bgA);
 		stage.add(bgB);
 		stage.add(friend1);

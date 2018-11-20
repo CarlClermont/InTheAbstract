@@ -21,6 +21,7 @@ public class Background extends AbstractSprite
 	private Background sibling;
 	
 	private Speed speed;
+	private int speedDivider;
 	private TransformableContent content;
 	
 	/**
@@ -29,11 +30,13 @@ public class Background extends AbstractSprite
 	 * @param yVal - sets the starting y value.
 	 * @param content - the background as a TC.
 	 * @param speed - the rate of motion. 
+	 * @param speedDivider - if the background needs to be slowed. should be 1 for full speed.
 	 */
-	public Background(int xVal, int yVal, TransformableContent content, Speed speed)
+	public Background(int xVal, int yVal, TransformableContent content, Speed speed, int speedDivider)
 	{
 		super();
 		this.speed = speed;
+		this.speedDivider = speedDivider;
 		x = xVal;
 		y = yVal;
 		
@@ -72,7 +75,7 @@ public class Background extends AbstractSprite
 	public void handleTick(int millis) 
 	{
 	  //System.out.println("BG - millis: " + millis);
-	  int currSpeed = speed.getSpeed();
+	  int currSpeed = getCurrentSpeed();
 		x -= currSpeed;
 		
 		// Background has gone off the left side, put it directly behind its sibling.
@@ -105,6 +108,20 @@ public class Background extends AbstractSprite
 	public double getHorizontalPos()
 	{
 	  return x;
+	}
+	
+	/**
+	 * Returns the current speed the background is moving.
+	 * @return the normal speed divided by a number > 0. if 1 then it is the normal speed.
+	 */
+	private int getCurrentSpeed()
+	{
+		int currentSpeed = speed.getSpeed();
+		if(speedDivider > 0)
+		{
+			currentSpeed /= speedDivider;
+		}
+		return currentSpeed;
 	}
 	
 	
