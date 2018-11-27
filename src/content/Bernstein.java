@@ -1,5 +1,7 @@
 package content;
 
+import javax.sound.sampled.Clip;
+
 import visual.dynamic.described.AbstractSprite;
 import visual.statik.TransformableContent;
 import visual.statik.sampled.ContentFactory;
@@ -11,7 +13,8 @@ import visual.statik.sampled.ContentFactory;
  */
 public class Bernstein extends AbstractSprite
 {
-
+	//Note survive sound should be clip _2 and death should be _5 in my opinion - Carl
+	
 	private TransformableContent content;
 	private int jumpSpeed = 5;
 	private int gravity = 1;
@@ -20,6 +23,9 @@ public class Bernstein extends AbstractSprite
 	private boolean jumping = false;
 	private boolean survived;
 	private boolean done = false;
+	private Clip jumpSound;
+	private Clip surviveSound; 
+	private Clip deathSound;
 
 	/**
 	 * .
@@ -33,6 +39,7 @@ public class Bernstein extends AbstractSprite
 		super.x = xVal;
 		super.y = yVal;
 		
+		//Visual Content
 		this.content = content;
 		if (this.content == null)
 		{
@@ -40,8 +47,31 @@ public class Bernstein extends AbstractSprite
 			this.content = contentFactory.createContent("");
 		}
 		this.setScale(0.5); //may need changing.
+		
+		//Auditory Content
+		
+		
+		//
 		this.setLocation(x,y);
 		this.setVisible(true);
+	}
+	
+	/**
+	 * sounds are not needed for a berstein to exist. So here is a seperate constructor.
+	 * @param xVal - 
+	 * @param yVal - 
+	 * @param content -
+	 * @param jumpSound - 
+	 * @param surviveSound - 
+	 * @param deathSound - 
+	 */
+	public Bernstein(int xVal, int yVal, TransformableContent content, 
+			Clip jumpSound, Clip surviveSound, Clip deathSound)
+	{
+		this(xVal, yVal, content);
+		this.jumpSound = jumpSound;
+		this.surviveSound = surviveSound;
+		this.deathSound = deathSound;
 	}
 	
 	/**
@@ -53,8 +83,8 @@ public class Bernstein extends AbstractSprite
 	{
 	  jumped = true;
 	  jumping = true;
-	  jumpSpeed = speed;
-	  
+	  this.jumpSpeed = speed;
+	  jumpSound.start();
 	  this.survived = survived;
 	}
 
@@ -82,6 +112,14 @@ public class Bernstein extends AbstractSprite
 	      {
 	        //Hit ground
 	        jumping = false;
+	        if(survived)
+	        {
+	        	surviveSound.start();
+	        }
+	        else
+	        {
+	        	deathSound.start();
+	        }
 	      }
 	    }
 	    

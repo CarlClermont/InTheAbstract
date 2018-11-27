@@ -2,13 +2,22 @@ package application;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.BufferedInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.JPanel;
 
 import app.JApplication;
 import content.Background;
 import content.BackgroundPair;
 import content.Bernstein;
+import content.ClipFactory;
 import content.Friend;
 import content.Speed;
 import content.Train;
@@ -36,6 +45,9 @@ public class App extends JApplication implements KeyListener
 	private final String bowersName = "bowers_0.gif";
 	private final String nortonName = "norton_0.gif";
 	private final String spragueName = "sprague_0.gif";
+	private final String jumpSoundName = "jump_grunt_0.aiff";
+	private final String surviveSoundName = "pain_grunt_2.aiff";
+	private final String deathSoundName = "pain_grunt_4.aiff";
 	private final int trainLeaveSpeed = 10;
 	private final int safeJumpSpeed = 25;
 	private final int friendOneX = 105;
@@ -104,6 +116,7 @@ public class App extends JApplication implements KeyListener
 		speed = new Speed();
 		ResourceFinder rf = ResourceFinder.createInstance(new resources.Marker());
 		ContentFactory contentFactory = new ContentFactory(rf);
+		ClipFactory clipFactory = new ClipFactory(rf);
 		
 		//TODO: Main Menu
 		
@@ -131,7 +144,9 @@ public class App extends JApplication implements KeyListener
 				contentFactory.createContent(happyFriendName, 4));
 		
 		bernstein = new Bernstein(bernsteinX, bernsteinY, 
-				contentFactory.createContent(normalBernsteinName, 4));
+				contentFactory.createContent(normalBernsteinName, 4),
+				clipFactory.getClip(jumpSoundName), clipFactory.getClip(surviveSoundName), 
+				clipFactory.getClip(deathSoundName));
 		
 		train = new Train(100, 265, contentFactory.createContent(trainName, 4));
 		
@@ -150,6 +165,7 @@ public class App extends JApplication implements KeyListener
 		contentPane.add(stageView);
 		stage.start();
 	}
+	
 	
 	/*-KEY-LISTENERS--------------------------------------------------------------------------------*/
 	@Override
