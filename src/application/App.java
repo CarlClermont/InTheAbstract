@@ -48,6 +48,9 @@ public class App extends JApplication implements KeyListener
 	private final String jumpSoundName = "jump_grunt_0.aiff";
 	private final String surviveSoundName = "pain_grunt_2.aiff";
 	private final String deathSoundName = "pain_grunt_4.aiff";
+	private final String trainConstantSoundName = "trainConstantSound_0.aiff";
+	private final String trainChooChooSoundName = "trainChooChooSound_0.aiff";
+	
 	private final int trainLeaveSpeed = 10;
 	private final int safeJumpSpeed = 25;
 	private final int friendOneX = 105;
@@ -148,7 +151,8 @@ public class App extends JApplication implements KeyListener
 				clipFactory.getClip(jumpSoundName), clipFactory.getClip(surviveSoundName), 
 				clipFactory.getClip(deathSoundName));
 		
-		train = new Train(100, 265, contentFactory.createContent(trainName, 4));
+		train = new Train(100, 265, contentFactory.createContent(trainName, 4),
+				clipFactory.getClip(trainConstantSoundName), clipFactory.getClip(trainChooChooSoundName));
 		
 		stage.add(cloudsA);
 		stage.add(cloudsB);

@@ -115,11 +115,13 @@ public class Bernstein extends AbstractSprite
 	        if(survived)
 	        {
 	        	surviveSound.start();
+	        	
 	        }
 	        else
 	        {
 	        	deathSound.start();
 	        }
+	        
 	      }
 	    }
 	    
@@ -131,6 +133,9 @@ public class Bernstein extends AbstractSprite
 	      {
 	        //Finished rolling
 	        done = true;
+	        jumpSound.close();
+	        surviveSound.close();
+	        deathSound.close();
 	      }
 	      
 	      rotationX += Math.PI / 6;
