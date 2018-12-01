@@ -7,11 +7,11 @@ import visual.statik.TransformableContent;
 import visual.statik.sampled.ContentFactory;
 
 /**
- * Funeral - Funeral scene for when you lose.
+ * FuneralScene - Funeral scene for when you lose.
  * @author Joel
  *
  */
-public class Funeral extends AbstractSprite
+public class FuneralScene extends AbstractSprite
 {
   private TransformableContent content;
   private Clip music;
@@ -25,7 +25,7 @@ public class Funeral extends AbstractSprite
    * @param music Music for funeral
    * @param ticksToWait Ticks to wait before starting funeral
    */
-  public Funeral(int x, int y, TransformableContent content, Clip music, int ticksToWait)
+  public FuneralScene(int x, int y, TransformableContent content, Clip music, int ticksToWait)
   {
     this.content = content;
     if (this.content == null)

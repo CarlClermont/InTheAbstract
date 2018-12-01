@@ -1,16 +1,9 @@
 package application;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.io.BufferedInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.JPanel;
 
 import app.JApplication;
@@ -19,9 +12,10 @@ import content.BackgroundPair;
 import content.Bernstein;
 import content.ClipFactory;
 import content.Friend;
-import content.Funeral;
+import content.FuneralScene;
 import content.Speed;
 import content.Train;
+import gui.Menu;
 import io.ResourceFinder;
 import visual.VisualizationView;
 import visual.dynamic.described.Stage;
@@ -32,11 +26,12 @@ import visual.statik.sampled.ContentFactory;
  * @author Carl Clermont, Joel Spiers, Paul Barnhill
  * 
  */
-public class App extends JApplication implements KeyListener
+public class App extends JApplication implements KeyListener, ActionListener
 {
 	//for some reason .png doesn't keep the alpha channel when I save it so,
 	//I use .gif if it needs alpha.
 	private final String backgroundName = "Background lowres.gif";
+	private final String menuBackgroundName = "menu_background.gif";
 	private final String cloudsName = "clouds.gif";
 	private final String funeralName = "funeral.gif";
 	private final String trainName = "train_1.gif";
@@ -107,9 +102,11 @@ public class App extends JApplication implements KeyListener
 		//Sets up hard code layout. 
 		contentPane.setLayout(null);
 		
-		//So we have a method that resets to the very beginning of the game.
-		//easier than finding every variable of existing objects and reseting them.
-		startGame();
+    ResourceFinder rf = ResourceFinder.createInstance(new resources.Marker());
+    contentFactory = new ContentFactory(rf);
+    clipFactory = new ClipFactory(rf);
+		
+		contentPane.add(new Menu(600, 600, this));
 		
 		//Note: tombstone gifs use 'Informal Roman' font.
 	}
@@ -124,9 +121,6 @@ public class App extends JApplication implements KeyListener
 		contentPane.removeAll(); //So it can reset.
 		
 		speed = new Speed();
-		ResourceFinder rf = ResourceFinder.createInstance(new resources.Marker());
-		contentFactory = new ContentFactory(rf);
-		clipFactory = new ClipFactory(rf);
 		
 		//TODO: Main Menu
 		
@@ -213,7 +207,7 @@ public class App extends JApplication implements KeyListener
 			}
 			else
 			{
-			  Funeral funeral = new Funeral(0, 0, contentFactory.createContent(funeralName), 
+			  FuneralScene funeral = new FuneralScene(0, 0, contentFactory.createContent(funeralName), 
 			      clipFactory.getClip(funeralMusicName), funeralDelay);
 			  stage.add(funeral);
 			}
@@ -236,6 +230,13 @@ public class App extends JApplication implements KeyListener
 	  JApplication app = new App(args, 600, 600);
 	  invokeInEventDispatchThread(app);
 	}
+
+  @Override
+  public void actionPerformed(ActionEvent e)
+  {
+    //Start game button pushed
+    startGame();
+  }
 
 
 	
