@@ -19,6 +19,7 @@ import content.BackgroundPair;
 import content.Bernstein;
 import content.ClipFactory;
 import content.Friend;
+import content.Funeral;
 import content.Speed;
 import content.Train;
 import io.ResourceFinder;
@@ -37,6 +38,7 @@ public class App extends JApplication implements KeyListener
 	//I use .gif if it needs alpha.
 	private final String backgroundName = "Background lowres.gif";
 	private final String cloudsName = "clouds.gif";
+	private final String funeralName = "funeral.gif";
 	private final String trainName = "train_1.gif";
 	private final String happyFriendName = "person_0.gif";
 	private final String sadFriendName = "person_1.gif";
@@ -50,9 +52,11 @@ public class App extends JApplication implements KeyListener
 	private final String deathSoundName = "pain_grunt_4.aiff";
 	private final String trainConstantSoundName = "trainConstantSound_0.aiff";
 	private final String trainChooChooSoundName = "trainChooChooSound_0.aiff";
+	private final String funeralMusicName = "funeral_music.aiff";
 	
 	private final int trainLeaveSpeed = 10;
 	private final int safeJumpSpeed = 25;
+	private final int funeralDelay = 150;
 	private final int friendOneX = 105;
 	private final int friendOneY = 280;
 	private final int friendTwoX = 245;
@@ -61,6 +65,9 @@ public class App extends JApplication implements KeyListener
 	private final int bernsteinY = 280;
 	private final int conductorX = 338;
 	private final int conductorY = 285;
+	
+	private ContentFactory contentFactory;
+	private ClipFactory clipFactory;
 	
 	private JPanel contentPane;
 	private Stage stage;
@@ -118,8 +125,8 @@ public class App extends JApplication implements KeyListener
 		
 		speed = new Speed();
 		ResourceFinder rf = ResourceFinder.createInstance(new resources.Marker());
-		ContentFactory contentFactory = new ContentFactory(rf);
-		ClipFactory clipFactory = new ClipFactory(rf);
+		contentFactory = new ContentFactory(rf);
+		clipFactory = new ClipFactory(rf);
 		
 		//TODO: Main Menu
 		
@@ -198,6 +205,18 @@ public class App extends JApplication implements KeyListener
 			//Render Bernstein in front of the train
 			stage.remove(bernstein);
 			stage.add(bernstein);
+			
+			//Create final scene
+			if(survived)
+			{
+			  //Do success stuff
+			}
+			else
+			{
+			  Funeral funeral = new Funeral(0, 0, contentFactory.createContent(funeralName), 
+			      clipFactory.getClip(funeralMusicName), funeralDelay);
+			  stage.add(funeral);
+			}
 		}
 		//R to reset. TODO: CHANGE TO A BUTTON THAT CAN ONLY BE PRESSED BEFORE OR AFTER GAME
 		else if(e.getKeyChar() == 'r')
