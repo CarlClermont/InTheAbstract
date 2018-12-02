@@ -69,9 +69,10 @@ public class App extends JApplication implements KeyListener, ActionListener
 	
 	private ContentFactory contentFactory;
 	private ClipFactory clipFactory;
-	
+
 	private JPanel contentPane;
 	private Stage stage;
+	private Menu menu;
 	private Speed speed;
 	private Bernstein bernstein;
 	private Train train;
@@ -113,18 +114,16 @@ public class App extends JApplication implements KeyListener, ActionListener
 		contentFactory = new ContentFactory(rf);
 		clipFactory = new ClipFactory(rf);
 		clips = new ArrayList<Clip>();
-		
-		contentPane.add(new Menu(600, 600, this));
+		menu = new Menu(width, height, this);
+		resetGame();
 		
 		//Note: tombstone gifs use 'Informal Roman' font.
 	}
 	
 	/**
-	 * Starts or resets the game.
-	 * NOTE: May need to be changed to public, depending on how we reset. If a main menu object
-	 * is used to reset then it will need to be.
+	 * Resets the game to the menu.
 	 */
-	private void startGame()
+	private void resetGame()
 	{
 		if(stage != null)
 		{
@@ -136,10 +135,20 @@ public class App extends JApplication implements KeyListener, ActionListener
 		}
 		clips.clear();
 		contentPane.removeAll(); //So it can reset.
+		contentPane.add(menu);
+		contentPane.repaint();
+	}
+	
+	/**
+	 * Starts the game.
+	 * NOTE: May need to be changed to public, depending on how we reset. If a main menu object
+	 * is used to reset then it will need to be.
+	 */
+	private void startGame()
+	{
+		contentPane.removeAll();
 		
 		speed = new Speed();
-		
-		//TODO: Main Menu
 		
 		// Setup train moving game (50ms between ticks)
 		stage = new Stage(50);
@@ -245,7 +254,7 @@ public class App extends JApplication implements KeyListener, ActionListener
 		//R to reset. TODO: CHANGE TO A BUTTON THAT CAN ONLY BE PRESSED BEFORE OR AFTER GAME
 		else if(e.getKeyChar() == 'r')
 		{
-			startGame();
+			resetGame();
 		}
 	}
 	
