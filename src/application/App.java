@@ -4,6 +4,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.sound.sampled.Clip;
 import javax.swing.JPanel;
 
 import app.JApplication;
@@ -18,6 +22,7 @@ import content.Train;
 import gui.Menu;
 import io.ResourceFinder;
 import visual.VisualizationView;
+import visual.dynamic.described.AbstractSprite;
 import visual.dynamic.described.Stage;
 import visual.statik.sampled.ContentFactory;
 
@@ -31,7 +36,6 @@ public class App extends JApplication implements KeyListener, ActionListener
 	//for some reason .png doesn't keep the alpha channel when I save it so,
 	//I use .gif if it needs alpha.
 	private final String backgroundName = "Background lowres.gif";
-	private final String menuBackgroundName = "menu_background.gif";
 	private final String cloudsName = "clouds.gif";
 	private final String funeralName = "funeral.gif";
 	private final String trainName = "train_1.gif";
@@ -61,6 +65,8 @@ public class App extends JApplication implements KeyListener, ActionListener
 	private final int conductorX = 338;
 	private final int conductorY = 285;
 	
+	private List<Clip> clips;
+	
 	private ContentFactory contentFactory;
 	private ClipFactory clipFactory;
 	
@@ -69,6 +75,7 @@ public class App extends JApplication implements KeyListener, ActionListener
 	private Speed speed;
 	private Bernstein bernstein;
 	private Train train;
+	private AbstractSprite endScene;
 	private Friend friend1, friend2, conductor;
 	
 	
@@ -102,9 +109,10 @@ public class App extends JApplication implements KeyListener, ActionListener
 		//Sets up hard code layout. 
 		contentPane.setLayout(null);
 		
-    ResourceFinder rf = ResourceFinder.createInstance(new resources.Marker());
-    contentFactory = new ContentFactory(rf);
-    clipFactory = new ClipFactory(rf);
+		ResourceFinder rf = ResourceFinder.createInstance(new resources.Marker());
+		contentFactory = new ContentFactory(rf);
+		clipFactory = new ClipFactory(rf);
+		clips = new ArrayList<Clip>();
 		
 		contentPane.add(new Menu(600, 600, this));
 		
@@ -118,6 +126,15 @@ public class App extends JApplication implements KeyListener, ActionListener
 	 */
 	private void startGame()
 	{
+		if(stage != null)
+		{
+			stage.clear();
+		}
+		for(Clip clip : clips)
+		{
+			clip.close();
+		}
+		clips.clear();
 		contentPane.removeAll(); //So it can reset.
 		
 		speed = new Speed();
@@ -147,13 +164,24 @@ public class App extends JApplication implements KeyListener, ActionListener
 		conductor = new Friend(conductorX, conductorY, 
 				contentFactory.createContent(happyFriendName, 4));
 		
+		Clip jumpSound, surviveSound, deathSound;
+		jumpSound = clipFactory.getClip(jumpSoundName);
+		surviveSound = clipFactory.getClip(surviveSoundName);
+		deathSound = clipFactory.getClip(deathSoundName);
+		clips.add(deathSound);
+		clips.add(surviveSound);
+		clips.add(jumpSound);
 		bernstein = new Bernstein(bernsteinX, bernsteinY, 
 				contentFactory.createContent(normalBernsteinName, 4),
-				clipFactory.getClip(jumpSoundName), clipFactory.getClip(surviveSoundName), 
-				clipFactory.getClip(deathSoundName));
+				jumpSound, surviveSound, deathSound);
 		
+		Clip trainConstantSound, trainChooChooSound;
+		trainConstantSound = clipFactory.getClip(trainConstantSoundName);
+		trainChooChooSound = clipFactory.getClip(trainChooChooSoundName);
+		clips.add(trainChooChooSound);
+		clips.add(trainConstantSound);
 		train = new Train(100, 265, contentFactory.createContent(trainName, 4),
-				clipFactory.getClip(trainConstantSoundName), clipFactory.getClip(trainChooChooSoundName));
+				trainConstantSound, clipFactory.getClip(trainChooChooSoundName));
 		
 		stage.add(cloudsA);
 		stage.add(cloudsB);
@@ -207,10 +235,12 @@ public class App extends JApplication implements KeyListener, ActionListener
 			}
 			else
 			{
-			  FuneralScene funeral = new FuneralScene(0, 0, contentFactory.createContent(funeralName), 
-			      clipFactory.getClip(funeralMusicName), funeralDelay);
-			  stage.add(funeral);
+			  Clip funeralMusic = clipFactory.getClip(funeralMusicName);
+			  clips.add(funeralMusic);
+			  endScene = new FuneralScene(0, 0, contentFactory.createContent(funeralName), 
+			      funeralMusic, funeralDelay);
 			}
+			stage.add(endScene);
 		}
 		//R to reset. TODO: CHANGE TO A BUTTON THAT CAN ONLY BE PRESSED BEFORE OR AFTER GAME
 		else if(e.getKeyChar() == 'r')
@@ -234,8 +264,16 @@ public class App extends JApplication implements KeyListener, ActionListener
   @Override
   public void actionPerformed(ActionEvent e)
   {
-    //Start game button pushed
-    startGame();
+	if(e.getActionCommand().equals("start"))
+	{
+		//Start game button pushed
+		startGame();
+	}
+	else if(e.getActionCommand().equals("exit"))
+	{
+		//Exit game button pushed
+		System.exit(0);
+	}
   }
 
 

@@ -18,10 +18,11 @@ import visual.statik.sampled.ContentFactory;
 public class Menu extends JPanel
 {
   private final String backgroundName = "menu_background.gif";
-  private final String buttonName = "menu_start_button.gif";
+  private final String startButtonName = "menu_start_button.gif";
+  private final String exitButtonName = "menu_exit_button.gif";
   
-  private JButton start;
-  private ImageIcon startImage;
+  private JButton start, exit;
+  private ImageIcon startImage, exitImage;
   private Content background;
   
   /**
@@ -31,7 +32,7 @@ public class Menu extends JPanel
    * @param height Window height
    * @param app ActionListener to send button actions to
    */
-  public Menu(int width, int height, ActionListener app)
+  public Menu(int width, int height, ActionListener al)
   {
     setBounds(0, 0, width, height);
     setLayout(null);
@@ -39,13 +40,22 @@ public class Menu extends JPanel
     ResourceFinder rf = ResourceFinder.createInstance(resources.Marker.class);
     ContentFactory cf = new ContentFactory(rf);
     
-    startImage = new ImageIcon(rf.findURL(buttonName));
+    startImage = new ImageIcon(rf.findURL(startButtonName));
+    exitImage = new ImageIcon(rf.findURL(exitButtonName));
     
     start = new JButton(startImage);
-    start.setLocation((width/2)-100, (height/4)-25);
+    start.setLocation((width/2)-100, (height/4)-60);
     start.setSize(200, 50);
-    start.addActionListener(app);
+    start.addActionListener(al);
+    start.setActionCommand("start");
     add(start);
+    
+    exit = new JButton(exitImage);
+    exit.setLocation((width/2)-75, (height/4));
+    exit.setSize(150, 35);
+    exit.addActionListener(al);
+    exit.setActionCommand("exit");
+    add(exit);
     
     Visualization vis = new Visualization();
     VisualizationView view = vis.getView();
