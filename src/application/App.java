@@ -79,6 +79,8 @@ public class App extends JApplication implements KeyListener, ActionListener
 	private AbstractSprite endScene;
 	private Friend friend1, friend2, conductor;
 	
+	private int actualJumpSpeed = -1;
+	
 	
 	/**
 	 * constructor.
@@ -221,8 +223,9 @@ public class App extends JApplication implements KeyListener, ActionListener
 	{
 		if(e.getKeyChar() == ' ')
 		{
-			System.out.println(speed.getSpeed());
-			boolean survived = speed.getSpeed() <= safeJumpSpeed;
+		  actualJumpSpeed = speed.getSpeed();
+			System.out.println(actualJumpSpeed);
+			boolean survived = actualJumpSpeed <= safeJumpSpeed;
 	      
 			speed.stop();
 	      
@@ -241,6 +244,7 @@ public class App extends JApplication implements KeyListener, ActionListener
 			if(survived)
 			{
 			  //Do success stuff
+			  endScene = null;
 			}
 			else
 			{
@@ -252,7 +256,7 @@ public class App extends JApplication implements KeyListener, ActionListener
 			stage.add(endScene);
 		}
 		//R to reset. TODO: CHANGE TO A BUTTON THAT CAN ONLY BE PRESSED BEFORE OR AFTER GAME
-		else if(e.getKeyChar() == 'r')
+		else if(e.getKeyChar() == 'r' && actualJumpSpeed > -1)
 		{
 			resetGame();
 		}
