@@ -17,6 +17,7 @@ import content.Bernstein;
 import content.ClipFactory;
 import content.Friend;
 import content.FuneralScene;
+import content.PhoneScene;
 import content.Speed;
 import content.Train;
 import gui.Menu;
@@ -55,7 +56,7 @@ public class App extends JApplication implements KeyListener, ActionListener
 	
 	private final int trainLeaveSpeed = 10;
 	private final int safeJumpSpeed = 25;
-	private final int funeralDelay = 150;
+	private final int endSceneDelay = 150;
 	private final int friendOneX = 105;
 	private final int friendOneY = 280;
 	private final int friendTwoX = 245;
@@ -244,18 +245,18 @@ public class App extends JApplication implements KeyListener, ActionListener
 			if(survived)
 			{
 			  //Do success stuff
-			  endScene = null;
+			  endScene = new PhoneScene(contentFactory, clipFactory, endSceneDelay);
 			}
 			else
 			{
 			  Clip funeralMusic = clipFactory.getClip(funeralMusicName);
 			  clips.add(funeralMusic);
 			  endScene = new FuneralScene(0, 0, contentFactory.createContent(funeralName), 
-			      funeralMusic, funeralDelay);
+			      funeralMusic, endSceneDelay);
 			}
 			stage.add(endScene);
 		}
-		//R to reset. TODO: CHANGE TO A BUTTON THAT CAN ONLY BE PRESSED BEFORE OR AFTER GAME
+		//R to reset.
 		else if(e.getKeyChar() == 'r' && actualJumpSpeed > -1)
 		{
 			resetGame();
@@ -277,18 +278,15 @@ public class App extends JApplication implements KeyListener, ActionListener
   @Override
   public void actionPerformed(ActionEvent e)
   {
-	if(e.getActionCommand().equals("start"))
-	{
-		//Start game button pushed
-		startGame();
-	}
-	else if(e.getActionCommand().equals("exit"))
-	{
-		//Exit game button pushed
-		System.exit(0);
-	}
+    if(e.getActionCommand().equals("start"))
+    {
+      //Start game button pushed
+      startGame();
+    }
+    else if(e.getActionCommand().equals("exit"))
+    {
+      //Exit game button pushed
+      System.exit(0);
+    }
   }
-
-
-	
 }
