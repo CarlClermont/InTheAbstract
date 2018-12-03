@@ -72,7 +72,6 @@ public class PhoneScene extends AbstractSprite
     {
       this.setVisible(true);
     }
-    System.out.println((ticksPassed-ticksToWait)/ticksBetweenScenes);
       
     switch((ticksPassed-ticksToWait)/ticksBetweenScenes)
     {
@@ -96,7 +95,7 @@ public class PhoneScene extends AbstractSprite
       case 6:   content = contentFactory.createContent(scene6name);
                 break;
                 
-      case 7:   content = contentFactory.createContent(scene1name);
+      case 8:   content = contentFactory.createContent(scene1name);
                 click.loop(0);
                 break;
       
