@@ -14,9 +14,16 @@ public class BackgroundPair
   private Background a;
   private Background b;
   
-  private TransformableContent contentA;
-  private TransformableContent contentB;
-  
+  /**
+   * A class to represent a pair of backgrounds used to create the rolling background effect.
+   * 
+   * @param xVal - x value for pair
+   * @param yVal - y value for pair
+   * @param contentA - Background 1
+   * @param contentB - Background 2
+   * @param speed - Speed object to control speed of the rolling background
+   * @param speedDivider - Offset needed to fix white line issue
+   */
   public BackgroundPair(int xVal, int yVal, TransformableContent contentA, 
       TransformableContent contentB, Speed speed, int speedDivider)
   {
@@ -27,11 +34,21 @@ public class BackgroundPair
     b.setSibling(a);
   }
   
+  /**
+   * Getter for background 1.
+   * 
+   * @return Background 1
+   */
   public Background getBackgroundOne()
   {
     return a;
   }
   
+  /**
+   * Getter for background 2.
+   * 
+   * @return Background 2
+   */
   public Background getBackgroundTwo()
   {
     return b;

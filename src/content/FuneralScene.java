@@ -18,7 +18,7 @@ public class FuneralScene extends AbstractSprite
   private int ticksPassed, ticksToWait;
   
   /**
-   * Funeral - Constructor for a Funeral
+   * Funeral - Constructor for a Funeral.
    * @param x X position
    * @param y Y position
    * @param content Content image

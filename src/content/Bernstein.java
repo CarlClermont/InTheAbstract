@@ -8,7 +8,7 @@ import visual.statik.sampled.ContentFactory;
 
 /**
  * Handles the actions for Bernstein.
- * @author Carl
+ * @author Carl and Joel
  *
  */
 public class Bernstein extends AbstractSprite
@@ -28,10 +28,10 @@ public class Bernstein extends AbstractSprite
 	private Clip deathSound;
 
 	/**
-	 * .
-	 * @param xVal - 
-	 * @param yVal - 
-	 * @param content - 
+	 * Base constructor for a Bernstein.
+	 * @param xVal - X value to use 
+	 * @param yVal - Y value to use
+	 * @param content - Content for this sprite
 	 */
 	public Bernstein(int xVal, int yVal, TransformableContent content)
 	{
@@ -48,22 +48,18 @@ public class Bernstein extends AbstractSprite
 		}
 		this.setScale(0.5); //may need changing.
 		
-		//Auditory Content
-		
-		
-		//
 		this.setLocation(x,y);
 		this.setVisible(true);
 	}
 	
 	/**
-	 * sounds are not needed for a berstein to exist. So here is a seperate constructor.
-	 * @param xVal - 
-	 * @param yVal - 
-	 * @param content -
-	 * @param jumpSound - 
-	 * @param surviveSound - 
-	 * @param deathSound - 
+	 * sounds are not needed for a Berstein to exist. So here is a seperate constructor.
+   * @param xVal - X value to use 
+   * @param yVal - Y value to use
+   * @param content - Content for this sprite
+	 * @param jumpSound - Sound for jump action
+	 * @param surviveSound - Sound for survive action
+	 * @param deathSound - sound to use on death
 	 */
 	public Bernstein(int xVal, int yVal, TransformableContent content, 
 			Clip jumpSound, Clip surviveSound, Clip deathSound)
@@ -75,17 +71,18 @@ public class Bernstein extends AbstractSprite
 	}
 	
 	/**
+	 * Start jump action.
 	 * 
 	 * @param speed - the speed to jump off.
-	 * @param survived - weather or not he rolls or slides
+	 * @param survivedJump - weather or not he rolls or slides
 	 */
-	public void jump(int speed, boolean survived)
+	public void jump(int speed, boolean survivedJump)
 	{
 	  jumped = true;
 	  jumping = true;
 	  this.jumpSpeed = speed;
 	  jumpSound.start();
-	  this.survived = survived;
+	  survived = survivedJump;
 	}
 
 	@Override

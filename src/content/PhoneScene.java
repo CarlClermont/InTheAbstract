@@ -25,7 +25,6 @@ public class PhoneScene extends AbstractSprite
   
   private TransformableContent content;
   private ContentFactory contentFactory;
-  private ClipFactory clipFactory;
   private Clip ring, click;
   private int ticksPassed, ticksToWait, ticksBetweenScenes;
  
@@ -42,7 +41,6 @@ public class PhoneScene extends AbstractSprite
     y = 0;
     this.setLocation(x, y);
     
-    this.clipFactory = clipFactory;
     this.contentFactory = contentFactory;
     
     content = contentFactory.createContent(scene0name);

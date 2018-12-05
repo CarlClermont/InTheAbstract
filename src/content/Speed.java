@@ -19,7 +19,7 @@ public class Speed extends AbstractSprite
 	private boolean stopping;
 	
 	/**
-	 * .
+	 * Default constructor for Speed.
 	 */
 	public Speed()
 	{

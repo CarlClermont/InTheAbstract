@@ -7,7 +7,7 @@ import visual.statik.TransformableContent;
 import visual.statik.sampled.ContentFactory;
 
 /**
- * .
+ * Train sprite.
  * @author Carl
  *
  */
@@ -20,13 +20,12 @@ public class Train extends AbstractSprite
 	private int speed;
 	private Clip trainConstantSound;
 	private Clip trainChooChooSound;
-	private final int repeatChooChooSound = 1000;
 
 	/**
-	 * .
-	 * @param xVal - 
-	 * @param yVal - 
-	 * @param content - 
+	 * Base constructor for a train sprite.
+	 * @param xVal - X position
+	 * @param yVal - Y position
+	 * @param content - Train image
 	 */
 	public Train(int xVal, int yVal, TransformableContent content)
 	{
@@ -50,14 +49,15 @@ public class Train extends AbstractSprite
 	}
 	
 	/**
-	 * .
-	 * @param xVal -
-	 * @param yVal - 
-	 * @param content - 
-	 * @param trainConstantSound - 
-	 * @param trainChooChooSound - 
+	 * Constructor for if you have sounds for a train sprite.
+   * @param xVal - X position
+   * @param yVal - Y position
+   * @param content - Train image
+	 * @param trainConstantSound - Train chugga chugga
+	 * @param trainChooChooSound - Train choo choo
 	 */
-	public Train(int xVal, int yVal, TransformableContent content, Clip trainConstantSound, Clip trainChooChooSound)
+	public Train(int xVal, int yVal, TransformableContent content, Clip trainConstantSound,
+	    Clip trainChooChooSound)
 	{
 		this(xVal, yVal, content);
 		this.trainConstantSound = trainConstantSound;
@@ -69,7 +69,7 @@ public class Train extends AbstractSprite
 	
 	/**
 	 * sets the speed of the train to the input speed.
-	 * @param speed - 
+	 * @param speed - Speed to use
 	 */
 	public void setSpeed(int speed)
 	{

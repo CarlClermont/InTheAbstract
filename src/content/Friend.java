@@ -5,7 +5,7 @@ import visual.statik.TransformableContent;
 import visual.statik.sampled.ContentFactory;
 
 /**
- * .
+ * Basic stick figure Friend for Bernstein.
  * @author Carl
  *
  */
@@ -16,7 +16,7 @@ public class Friend extends AbstractSprite
 	private int speed;
 
 	/**
-	 * .
+	 * Base friend constructor.
 	 * @param xVal - 
 	 * @param yVal - 
 	 * @param content - 
@@ -40,6 +40,11 @@ public class Friend extends AbstractSprite
 		this.setVisible(true);
 	}	
 	
+	/**
+	 * Sets the forward speed of this sprite.
+	 * 
+	 * @param speed Speed to use
+	 */
 	public void setSpeed(int speed)
 	{
 	  this.speed = speed;

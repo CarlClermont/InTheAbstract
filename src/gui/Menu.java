@@ -17,6 +17,8 @@ import visual.statik.sampled.ContentFactory;
  */
 public class Menu extends JPanel
 {
+
+  private static final long serialVersionUID = 1L;
   private final String backgroundName = "menu_background.gif";
   private final String startButtonName = "menu_start_button.gif";
   private final String exitButtonName = "menu_exit_button.gif";
@@ -30,7 +32,7 @@ public class Menu extends JPanel
    * 
    * @param width Window width
    * @param height Window height
-   * @param app ActionListener to send button actions to
+   * @param al ActionListener to send button actions to
    */
   public Menu(int width, int height, ActionListener al)
   {
